@@ -12,7 +12,7 @@ Windows 10/11
 ## libraries
 Python, Pygame, time, pygame.sprite, random, 
 
-### Installing
+#### Installing
 
 Download the files into your C: drive
 
