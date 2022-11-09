@@ -21,7 +21,6 @@ Download the files into your C: drive
 
 * Download the File
 * Open in python 
-```
 
 ## Help
 
