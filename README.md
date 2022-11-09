@@ -1,18 +1,19 @@
 # IntroToProgrammingFinalProject
-# Project Title
-
-Simple overview of use/purpose.
+# Apple Catch
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+Avoid the rotten apples while atching the ripe ones
 
 ## Getting Started
 
 ### Dependencies
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Python 3.x, Pygame, etc.
+## Operating System
+Windows 10/11
+
+## Librarries 
+Python, Pygame, 
 
 ### Installing
 
