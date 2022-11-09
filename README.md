@@ -27,7 +27,7 @@ Download the files into your C: drive
 
 ## Authors
 
-* Andrew Enriquez (A.enriquez24@bcp.org
+* Andrew Enriquez (A.enriquez24@bcp.org)
 
 ## Version History
 
