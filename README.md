@@ -5,8 +5,7 @@
 
 Avoid the rotten apples while atching the ripe ones
 
-
-### Dependencies
+### System Requirements
 ## Operating System
 Windows 10/11
 
@@ -19,16 +18,16 @@ Download the files into your C: drive
 
 ### Executing program
 
-* Download the File
-* Open in python 
+* Open file in python 
 
 ## Help
 
-Any advise for common problems or issues.
+* Make sure all files stay togther
+(More comming soon)
 
 ## Authors
 
-Andrew Enriquez
+* Andrew Enriquez (A.enriquez24@bcp.org
 
 ## Version History
 
