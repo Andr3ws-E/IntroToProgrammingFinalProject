@@ -7,11 +7,10 @@ Avoid the rotten apples while atching the ripe ones
 
 
 ### Dependencies
-
 ## Operating System
 Windows 10/11
 
-## Librarries 
+## libraries
 Python, Pygame, time, pygame.sprite, random, 
 
 ### Installing
