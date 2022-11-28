@@ -10,6 +10,14 @@ from pygame.sprite import Sprite
 import random
 from random import randint
 import time
+from settings import *
+import os 
+
+# Setup asset folders
+game_folder = os.path.dirname(__file__)
+img_folder = os.path.join(game_folder, 'Images')
+
+vec = pg.math.Vector2
 
 # setting for the text
 def draw_text(text, size, color, x, y):
@@ -110,9 +118,10 @@ class Mob(Sprite):
 class Food(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
-        self.image = pg.Surface((w, h))
-        self.color = color
-        self.image.fill(GREEN)
+        #self.image = pg.Surface((w, h))
+        #self.color = color
+        #self.image.fill(GREEN)
+        self.image = pg.image.load(os.path.join(img_folder, Apple.png))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
