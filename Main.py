@@ -45,14 +45,14 @@ class Player(Sprite):
         self.health = 100
     def controls(self):
         keys = pg.key.get_pressed()
-        # if keys[pg.K_w]:
-        #     self.acc.y = -5
+
         if keys[pg.K_a]:
             self.acc.x = -5
-        # if keys[pg.K_s]:
-        #     self.acc.y = 5
+
         if keys[pg.K_d]:
             self.acc.x = 5 
+
+
     def draw(self):
         pass
     def inbounds(self):
@@ -62,6 +62,7 @@ class Player(Sprite):
             self.pos.x = WIDTH  
 #updates the player 
     def update(self):
+
         self.acc = vec(0,PLAYER_GRAV)
         self.controls()
         # friction
@@ -87,9 +88,10 @@ class Boarder(Sprite):
 class Mob(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
-        self.image = pg.Surface((w, h))
-        self.color = color
-        self.image.fill(color)
+        #self.image = pg.Surface((w, h))
+        #self.color = color
+        #self.image.fill(color)
+        self.image = pg.image.load(os.path.join(img_folder, 'Testapple.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -118,14 +120,24 @@ class Mob(Sprite):
 class Food(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
-        #self.image = pg.Surface((w, h))
-        #self.color = color
-        #self.image.fill(GREEN)
-        self.image = pg.image.load(os.path.join(img_folder, Apple.png))
+        # self.image = pg.Surface((w, h))
+        # self.color = color
+        # self.image.fill(GREEN)
+        # makes the sprite as a image from images folder
+        self.image = pg.image.load(os.path.join(img_folder, 'Testapple.png')).convert()
         self.rect = self.image.get_rect()
+        self.rect.center = (WIDTH/2, HEIGHT/2)
+        print(self.rect.center)
         self.rect.x = x
         self.rect.y = y
         self.speed = 5
+        def update(self):
+            self.rect.x += 5
+            self.rect.y += 5
+            if sef.rect.x > WIDTH:
+                self.rect.x = 0
+            if sef.rect.y > HEIGHT:
+                self.rect.y = 0
 # Respawns a point whenever it leaves the boundary/game screen
     def boundscheck(self):
         if not self.rect.x > 0 or not self.rect.x < WIDTH:
@@ -149,8 +161,9 @@ class Food(Sprite):
 pg.init()
 pg.mixer.init()
 screen = pg.display.set_mode((WIDTH, HEIGHT))
-pg.display.set_caption("Point Catch")
+pg.display.set_caption("Apple Catch")
 clock = pg.time.Clock()
+
   
 # create groups
 all_sprites = pg.sprite.Group()
