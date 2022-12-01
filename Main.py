@@ -91,7 +91,7 @@ class Mob(Sprite):
         #self.image = pg.Surface((w, h))
         #self.color = color
         #self.image.fill(color)
-        self.image = pg.image.load(os.path.join(img_folder, 'Testapple.png')).convert()
+        self.image = pg.image.load(os.path.join(img_folder, 'Bad_Apple.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -124,7 +124,7 @@ class Food(Sprite):
         # self.color = color
         # self.image.fill(GREEN)
         # makes the sprite as a image from images folder
-        self.image = pg.image.load(os.path.join(img_folder, 'Testapple.png')).convert()
+        self.image = pg.image.load(os.path.join(img_folder, 'Good_Apple.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
         print(self.rect.center)
