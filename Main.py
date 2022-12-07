@@ -35,8 +35,9 @@ def colorbyte():
 class Player(Sprite):
     def __init__(self):
         Sprite.__init__(self)
-        self.image = pg.Surface((50, 50))
-        self.image.fill(BLUE)
+        # makes the sprite as a image from images folder
+        self.image = pg.image.load(os.path.join(img_folder, 'Basket.jpg')).convert()
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
         self.pos = vec(WIDTH/2, HEIGHT-40)
@@ -47,11 +48,10 @@ class Player(Sprite):
         keys = pg.key.get_pressed()
 
         if keys[pg.K_a]:
-            self.acc.x = -5
+             self.acc.x = -5
 
         if keys[pg.K_d]:
-            self.acc.x = 5 
-
+            self.acc.x = 5
 
     def draw(self):
         pass
@@ -88,10 +88,8 @@ class Boarder(Sprite):
 class Mob(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
-        #self.image = pg.Surface((w, h))
-        #self.color = color
-        #self.image.fill(color)
-        self.image = pg.image.load(os.path.join(img_folder, 'Bad_Apple.png')).convert()
+        self.image = pg.image.load(os.path.join(img_folder, 'Bad_Apple.jpg')).convert()
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -120,11 +118,9 @@ class Mob(Sprite):
 class Food(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
-        # self.image = pg.Surface((w, h))
-        # self.color = color
-        # self.image.fill(GREEN)
         # makes the sprite as a image from images folder
-        self.image = pg.image.load(os.path.join(img_folder, 'Good_Apple.png')).convert()
+        self.image = pg.image.load(os.path.join(img_folder, 'Good_Apple.jpg')).convert()
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
         print(self.rect.center)
