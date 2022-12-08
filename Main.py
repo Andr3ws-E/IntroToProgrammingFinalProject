@@ -1,23 +1,34 @@
 '''
 Game Goals: move left and right to grab all 30 points with the most health possible
 '''
-# sources: 
-#  Mr. Cozort, http://kidscancode.org/blog/, https://www.w3schools.com
+# Sources: 
+#  Mr. Cozort
+#  http://kidscancode.org/blog/
+#  https://www.w3schools.com
+# Tech with Tim:https://www.youtube.com/watch?v=2BikxsbkuIU
 
 #imports libraries
 import pygame as pg
 from pygame.sprite import Sprite
+from pygame import mixer
 import random
 from random import randint
 import time
 from settings import *
 import os 
+from Sound import *
+
 
 # Setup asset folders
 game_folder = os.path.dirname(__file__)
 img_folder = os.path.join(game_folder, 'Images')
 
+game_folder = os.path.dirname(__file__)
+sound_folder = os.path.join(game_folder, 'Sound')
+
+
 vec = pg.math.Vector2
+
 
 # setting for the text
 def draw_text(text, size, color, x, y):
@@ -160,7 +171,15 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Apple Catch")
 clock = pg.time.Clock()
 
-  
+# Sound Variable
+Mob_damage = pg.mixer.Sound(os.path.join(sound_folder, 'bad.wav'))
+Point_catch = pg.mixer.Sound(os.path.join(sound_folder, 'good.wav'))
+
+# Background Music
+music = pg.mixer.music.load(os.path.join(sound_folder, 'background.wav'))
+# loops the music
+pg.mixer.music.play(-1)
+
 # create groups
 all_sprites = pg.sprite.Group()
 all_grounds = pg.sprite.Group()
@@ -204,11 +223,13 @@ while running:
     if mobhits:
         print("ive struck a mob")
         player.health -= 10
+        Mob_damage.play()
     # gives you 1 point per a food you catch
     foodhits = pg.sprite.spritecollide(player, foods, True)    
     if foodhits:
         print("ive earned a point")
         SCORE += 1
+        Point_catch.play()
 
     # If you close the game it will tell you your points and health
     for event in pg.event.get():
