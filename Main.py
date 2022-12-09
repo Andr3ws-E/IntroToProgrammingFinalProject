@@ -103,8 +103,8 @@ class Mob(Sprite):
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = x
-        self.rect.y = y
-        self.speed = 5
+        self.rect.y = 0
+        self.speed = 8
 # Respawns mob whenever it leaves the boundary/ game screen
     def boundscheck(self):
         if not self.rect.x > 0 or not self.rect.x < WIDTH:
@@ -118,7 +118,7 @@ class Mob(Sprite):
             m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
             all_sprites.add(m)
             mobs.add(m)
-            print(m)    
+            print(m)  
     def update(self):
         #self.rect.x += self.speed
         #makes mobs move down
@@ -136,8 +136,8 @@ class Food(Sprite):
         self.rect.center = (WIDTH/2, HEIGHT/2)
         print(self.rect.center)
         self.rect.x = x
-        self.rect.y = y
-        self.speed = 5
+        self.rect.y = 0
+        self.speed = 10
         def update(self):
             self.rect.x += 5
             self.rect.y += 5
@@ -193,14 +193,15 @@ ground = Boarder(0, HEIGHT-40, WIDTH, 40)
 ground2 = Boarder(0, -480, WIDTH, 40)
 
 # spawn in 15 mobs in random locations to start
-for i in range(14):
+for i in range(3):
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
-        print(i)
+        print(m)
+        time.sleep(1)
 
 # spwans in 40 points to start
-for i in range(38):
+for i in range(1):
         f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
         all_sprites.add(f)
         foods.add(f)
@@ -224,12 +225,23 @@ while running:
         print("ive struck a mob")
         player.health -= 10
         Mob_damage.play()
+        # respawns a new mob in
+        m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
+        all_sprites.add(m)
+        mobs.add(m)
+        print(m)
+        
     # gives you 1 point per a food you catch
     foodhits = pg.sprite.spritecollide(player, foods, True)    
     if foodhits:
         print("ive earned a point")
         SCORE += 1
         Point_catch.play()
+    # respawns a new apple in
+        f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
+        all_sprites.add(f)
+        foods.add(f)
+        print(f) 
 
     # If you close the game it will tell you your points and health
     for event in pg.event.get():
@@ -264,7 +276,3 @@ while running:
     if player.health == 0:
             print ("You died, your score was: " + str(SCORE))
             pg.QUIT()
-# once you collect all points you get told you win and your health, then quits 
-    elif SCORE == 30:
-            print("You Win!!! Your health was at " + str(player.health))
-            pg.QUIT()      
