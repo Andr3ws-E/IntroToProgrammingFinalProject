@@ -55,6 +55,7 @@ class Player(Sprite):
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.health = 100
+# keyboard controls
     def controls(self):
         keys = pg.key.get_pressed()
 
@@ -62,6 +63,12 @@ class Player(Sprite):
              self.acc.x = -5
 
         if keys[pg.K_d]:
+            self.acc.x = 5
+        
+        if keys[pg.K_LEFT]:
+            self.acc.x = -5
+
+        if keys[pg.K_RIGHT]:
             self.acc.x = 5
 
     def draw(self):
@@ -193,15 +200,15 @@ ground = Boarder(0, HEIGHT-40, WIDTH, 40)
 ground2 = Boarder(0, -480, WIDTH, 40)
 
 # spawn in 15 mobs in random locations to start
-for i in range(3):
+for i in range(4):
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
         print(m)
-        time.sleep(1)
 
+        
 # spwans in 40 points to start
-for i in range(1):
+for i in range(2):
         f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
         all_sprites.add(f)
         foods.add(f)
@@ -225,7 +232,7 @@ while running:
         print("ive struck a mob")
         player.health -= 10
         Mob_damage.play()
-        # respawns a new mob in
+        # # respawns a new mob in when the player collides with it
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
@@ -237,21 +244,11 @@ while running:
         print("ive earned a point")
         SCORE += 1
         Point_catch.play()
-    # respawns a new apple in
+    # respawns a new apple in when the player collides with it
         f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
         all_sprites.add(f)
         foods.add(f)
         print(f) 
-
-    # If you close the game it will tell you your points and health
-    for event in pg.event.get():
-        # check for closed window
-        if event.type == pg.QUIT:
-            running = False
-            print ("Why quit, your score was: " + str(SCORE) + " and your health was: " + str(player.health))
-        if event.type == player.health:
-            if event.key == pg.K_SPACE:
-                player.jump()
         
     ############ Update ##############
     # update all sprites
@@ -271,6 +268,16 @@ while running:
 
     # buffer - after drawing everything, flip display
     pg.display.flip()
+
+    # If you close the game it will tell you your points and health
+    for event in pg.event.get():
+        # check for closed window
+        if event.type == pg.QUIT:
+            running = False
+            print ("Why quit, your score was: " + str(SCORE) + " and your health was: " + str(player.health))
+        if event.type == player.health:
+            if event.key == pg.K_SPACE:
+                player.jump()
 
 # Prints your score once you die, and ends game
     if player.health == 0:
