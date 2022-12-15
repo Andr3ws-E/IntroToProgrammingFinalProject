@@ -26,9 +26,7 @@ img_folder = os.path.join(game_folder, 'Images')
 game_folder = os.path.dirname(__file__)
 sound_folder = os.path.join(game_folder, 'Sound')
 
-
 vec = pg.math.Vector2
-
 
 # setting for the text
 def draw_text(text, size, color, x, y):
@@ -48,6 +46,7 @@ class Player(Sprite):
         Sprite.__init__(self)
         # makes the sprite as a image from images folder
         self.image = pg.image.load(os.path.join(img_folder, 'Basket.jpg')).convert()
+        # removes black background
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
@@ -106,7 +105,9 @@ class Boarder(Sprite):
 class Mob(Sprite):
     def __init__(self, x, y, w, h, color):
         Sprite.__init__(self)
+        # makes the sprite an image
         self.image = pg.image.load(os.path.join(img_folder, 'Bad_Apple.jpg')).convert()
+        # Removes the black background
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -138,6 +139,7 @@ class Food(Sprite):
         Sprite.__init__(self)
         # makes the sprite as a image from images folder
         self.image = pg.image.load(os.path.join(img_folder, 'Good_Apple.jpg')).convert()
+        # Removes the black background
         self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH/2, HEIGHT/2)
@@ -207,7 +209,7 @@ for i in range(5):
         print(m)
 
         
-# spwans in 40 points to start
+# spwans in 2 points to start
 for i in range(2):
         f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
         all_sprites.add(f)
@@ -232,7 +234,7 @@ while running:
         print("ive struck a mob")
         player.health -= 10
         Mob_damage.play()
-        # # respawns a new mob in when the player collides with it
+        # respawns a new mob in when the player collides with it
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
@@ -254,7 +256,7 @@ while running:
     # update all sprites
     all_sprites.update()
 
-    ############ Draw ################
+    ###### Draw the background #######
     # draw the background screen
     screen.fill(BLACK)
 
@@ -280,8 +282,6 @@ while running:
                 player.jump()
 
 # Prints your score once you die, and ends game
-
-
     if player.health == 0:
         print ("You died, your score is" + str(SCORE))
         pg.QUIT
