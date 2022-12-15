@@ -200,7 +200,7 @@ ground = Boarder(0, HEIGHT-40, WIDTH, 40)
 ground2 = Boarder(0, -480, WIDTH, 40)
 
 # spawn in 15 mobs in random locations to start
-for i in range(4):
+for i in range(5):
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
@@ -280,6 +280,9 @@ while running:
                 player.jump()
 
 # Prints your score once you die, and ends game
+
+
     if player.health == 0:
-            print ("You died, your score was: " + str(SCORE))
-            pg.QUIT()
+        print ("You died, your score is" + str(SCORE))
+        pg.QUIT
+    
