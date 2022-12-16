@@ -5,7 +5,6 @@
 
 Avoid the eatten apples while trying to catch the ripe ones
 
-### System Requirements
 ## Operating System
 Windows 10/11
 
