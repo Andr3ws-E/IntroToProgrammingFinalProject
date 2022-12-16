@@ -9,17 +9,17 @@ Avoid the eatten apples while trying to catch the ripe ones
 Windows 10/11
 
 # Dependencies
-## libraries
+### libraries
 Python, Pygame, time, pygame.sprite, random, 
 
-## Programs
+### Programs
 python 3.10
 
-### Installing
+# Installing
 
 Download the files into your C: drive
 
-### Executing program
+# Executing program
 
 * Open file in python 
 
@@ -27,11 +27,11 @@ Download the files into your C: drive
 
 * Make sure all files stay togther
 
-## Authors
+# Authors
 
 * Andrew Enriquez (A.enriquez24@bcp.org)
 
-## Version History
+# Version History
 
 * 1.0
 - Base game created
