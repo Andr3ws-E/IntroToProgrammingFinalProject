@@ -180,6 +180,25 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Apple Catch")
 clock = pg.time.Clock()
 
+#load button images 
+start_img = pg.image.load(img_folder, 'start_btn.jpeg').convert_alpha()
+exit_button = pg.image.load(img_folder, 'exit_btn.jpeg').convert_alpha()
+
+# Button Class
+class Button():
+    def __init__(self, x, y, image):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def draw(self):
+        # Draws the button on the screen
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+# Creates button instances
+start_button = Button(100, 200, start_img)
+exit_button = Button(450, 200, exit_img)
+
 # Sound Variable
 Mob_damage = pg.mixer.Sound(os.path.join(sound_folder, 'bad.wav'))
 Point_catch = pg.mixer.Sound(os.path.join(sound_folder, 'good.wav'))
@@ -226,6 +245,8 @@ while running:
     # keep the loop running using clock
     clock.tick(FPS)
 
+    screen.fill(BLUE)
+
     hits = pg.sprite.spritecollide(player, all_grounds, False)
 
     mobhits = pg.sprite.spritecollide(player, mobs, True)
@@ -258,7 +279,7 @@ while running:
 
     ###### Draw the background #######
     # draw the background screen
-    screen.fill(BLACK)
+    screen.fill(BLUE)
 
     # draw text
     # shows how many points and your health in the game
@@ -285,4 +306,3 @@ while running:
     if player.health == 0:
         print ("You died, your score is" + str(SCORE))
         pg.QUIT
-    
