@@ -15,23 +15,23 @@ Python, Pygame, time, pygame.sprite, random,
 ### Programs
 python 3.10
 
-# Installing
+## Installing
 
 Download the files into your C: drive
 
-# Executing program
+## Executing program
 
 * Open file in python 
 
-# Help
+## Help
 
 * Make sure all files stay togther
 
-# Authors
+## Authors
 
 * Andrew Enriquez (A.enriquez24@bcp.org)
 
-# Version History
+## Version History
 
 * 1.0
 - Base game created
