@@ -6,6 +6,8 @@ Game Goals: move left and right to grab all 30 points with the most health possi
 #  http://kidscancode.org/blog/
 #  https://www.w3schools.com
 # Tech with Tim:https://www.youtube.com/watch?v=2BikxsbkuIU
+# Coding With Russ https://www.youtube.com/watch?v=Ulp1Kimblg0
+# BaralTech https://www.youtube.com/watch?v=GMBqjxcKogA
 
 #imports libraries
 import pygame as pg
@@ -180,24 +182,44 @@ screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Apple Catch")
 clock = pg.time.Clock()
 
-#load button images 
-start_img = pg.image.load(img_folder, 'start_btn.jpeg').convert_alpha()
-exit_button = pg.image.load(img_folder, 'exit_btn.jpeg').convert_alpha()
+
 
 # Button Class
 class Button():
-    def __init__(self, x, y, image):
-        self.image = image
+    def __init__(self, x, y, image, scale):
+        width = image.get_width()
+        height = image.get_height()
+        self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
+        self.clicked = False
 
-    def draw(self):
+    def draw(self, surface):
+        action = False
+        # Get Mouse location 
+        pos = pg.mouse.get_pos()
+
+        #check mouseover and clicked conditions
+        if self.rect.collidepoint(pos):
+            if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                self.clicked = True
+                action = True
+
+        if pg.mouse.get_pressed()[0] == 0:
+            self.clicked = True
+            
         # Draws the button on the screen
-        screen.blit(self.image, (self.rect.x, self.rect.y))
+        surface.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
+
+#load button images 
+start_img = pg.image.load(os.path.join(img_folder, 'start_btn.jpeg')).convert_alpha()
+exit_img = pg.image.load(os.path.join(img_folder, 'exit_btn.jpeg')).convert_alpha()
 
 # Creates button instances
-start_button = Button(100, 200, start_img)
-exit_button = Button(450, 200, exit_img)
+start_button = Button(30, HEIGHT/2, start_img, 1)
+exit_button = Button(235, HEIGHT/2, exit_img, 1)
 
 # Sound Variable
 Mob_damage = pg.mixer.Sound(os.path.join(sound_folder, 'bad.wav'))
@@ -220,16 +242,15 @@ player = Player()
 ground = Boarder(0, HEIGHT-40, WIDTH, 40)
 ground2 = Boarder(0, -480, WIDTH, 40)
 
-# spawn in 15 mobs in random locations to start
-for i in range(5):
+def sprite_spawn():
+    # spawn in 5 mobs in random locations to start
+    for i in range(5):
         m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
         all_sprites.add(m)
         mobs.add(m)
-        print(m)
-
-        
-# spwans in 2 points to start
-for i in range(2):
+        print(m)        
+    # spwans in 2 points to start
+    for i in range(2):
         f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
         all_sprites.add(f)
         foods.add(f)
@@ -243,66 +264,69 @@ all_grounds.add(ground, ground2)
 running = True
 while running:
     # keep the loop running using clock
-    clock.tick(FPS)
+        clock.tick(FPS)
 
-    screen.fill(BLUE)
+        ###### Draw the background #######
+        screen.fill(BLACK)
 
-    hits = pg.sprite.spritecollide(player, all_grounds, False)
+        if start_button.draw(screen):
+            print('game starting')
+        if exit_button.draw(screen):
+            pg.QUIT()
+            print('game ending')
 
-    mobhits = pg.sprite.spritecollide(player, mobs, True)
-    # removes 10 health for every mob hit
-    if mobhits:
-        print("ive struck a mob")
-        player.health -= 10
-        Mob_damage.play()
-        # respawns a new mob in when the player collides with it
-        m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
-        all_sprites.add(m)
-        mobs.add(m)
-        print(m)
-        
-    # gives you 1 point per a food you catch
-    foodhits = pg.sprite.spritecollide(player, foods, True)    
-    if foodhits:
-        print("ive earned a point")
-        SCORE += 1
-        Point_catch.play()
-    # respawns a new apple in when the player collides with it
-        f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
-        all_sprites.add(f)
-        foods.add(f)
-        print(f) 
-        
-    ############ Update ##############
-    # update all sprites
-    all_sprites.update()
+        hits = pg.sprite.spritecollide(player, all_grounds, False)
 
-    ###### Draw the background #######
-    # draw the background screen
-    screen.fill(BLUE)
+        mobhits = pg.sprite.spritecollide(player, mobs, True)
+        # removes 10 health for every mob hit
+        if mobhits:
+            print("ive struck a mob")
+            player.health -= 10
+            Mob_damage.play()
+            # respawns a new mob in when the player collides with it
+            m = Mob(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (RED))
+            all_sprites.add(m)
+            mobs.add(m)
+            print(m)
+            
+        # gives you 1 point per a food you catch
+        foodhits = pg.sprite.spritecollide(player, foods, True)    
+        if foodhits:
+            print("ive earned a point")
+            SCORE += 1
+            Point_catch.play()
+        # respawns a new apple in when the player collides with it
+            f = Food(randint(0,WIDTH), randint(0,HEIGHT), 25, 25, (GREEN))
+            all_sprites.add(f)
+            foods.add(f)
+            print(f) 
+            
+        ############ Update ##############
+        # update all sprites
+        all_sprites.update()
 
-    # draw text
-    # shows how many points and your health in the game
-    # draw all sprites
-    draw_text("POINTS: " + str(SCORE), 22, WHITE, WIDTH / 2, HEIGHT / 24)
-    draw_text ("HEALTH: " + str(player.health), 22, WHITE, WIDTH / 2, HEIGHT / 10)
-    all_sprites.draw(screen)
+        # draw text
+        # shows how many points and your health in the game
+        # draw all sprites
+        draw_text("POINTS: " + str(SCORE), 22, WHITE, WIDTH / 2, HEIGHT / 24)
+        draw_text ("HEALTH: " + str(player.health), 22, WHITE, WIDTH / 2, HEIGHT / 10)
+        all_sprites.draw(screen)
 
 
-    # buffer - after drawing everything, flip display
-    pg.display.flip()
+        # buffer - after drawing everything, flip display
+        pg.display.flip()
 
-    # If you close the game it will tell you your points and health
-    for event in pg.event.get():
-        # check for closed window
-        if event.type == pg.QUIT:
-            running = False
-            print ("Why quit, your score was: " + str(SCORE) + " and your health was: " + str(player.health))
-        if event.type == player.health:
-            if event.key == pg.K_SPACE:
-                player.jump()
+        # If you close the game it will tell you your points and health
+        for event in pg.event.get():
+            # check for closed window
+            if event.type == pg.QUIT:
+                running = False
+                print ("Why quit, your score was: " + str(SCORE) + " and your health was: " + str(player.health))
 
-# Prints your score once you die, and ends game
-    if player.health == 0:
-        print ("You died, your score is" + str(SCORE))
-        pg.QUIT
+
+        # Prints your score once you die, and ends game
+        if player.health == 0:
+            print ("You died, your score is" + str(SCORE))
+            pg.QUIT()
+
+        pg.display.update()
