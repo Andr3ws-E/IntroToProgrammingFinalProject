@@ -27,7 +27,6 @@ Download the files into your C: drive
 ## Help
 
 * Make sure all files stay togther
-(More comming soon)
 
 ## Authors
 
