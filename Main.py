@@ -217,14 +217,12 @@ class Button():
 
 #load button images 
 start_img = pg.image.load(os.path.join(img_folder, 'start_btn.jpeg')).convert_alpha()
-exit_img = pg.image.load(os.path.join(img_folder, 'exit_btn.jpeg')).convert_alpha()
+#exit_img = pg.image.load(os.path.join(img_folder, 'exit_btn.jpeg')).convert_alpha()
 
 # Creates button instances
-start_button = Button(30, HEIGHT/2, start_img, 1)
-exit_button = Button(235, HEIGHT/2, exit_img, 1)
+start_button = Button(125, HEIGHT/2, start_img, 1)
+#exit_button = Button(235, HEIGHT/2, exit_img, 1)
 
-def move_exit_button():
-    exit_button = Button(500, HEIGHT/2, exit_img, 1)
 
 # Sound Variable
 Mob_damage = pg.mixer.Sound(os.path.join(sound_folder, 'bad.wav'))
@@ -277,14 +275,12 @@ while running:
         # if the user preses the button it spawn in the point, and mob sprites
         if start_button.draw(screen):
             sprite_spawn() 
-            move_exit_button()
-            pg.display.update()
             print('Game Starting')
 
         # if the user hits exit it will close the game
-        if exit_button.draw(screen):
-            print('Game Ending')
-            pg.QUIT() 
+        #if exit_button.draw(screen):
+            #print('Game Ending')
+            #pg.QUIT() 
             
 
 
@@ -339,7 +335,7 @@ while running:
 
         # Prints your score once you die, and ends game
         if player.health == 0:
-            print ("You died, your score is" + str(SCORE))
+            print ("You died, your score is " + str(SCORE))
             pg.QUIT()
 
         pg.display.update()
