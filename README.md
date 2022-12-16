@@ -23,7 +23,7 @@ Download the files into your C: drive
 
 * Open file in python 
 
-## Help
+# Help
 
 * Make sure all files stay togther
 
