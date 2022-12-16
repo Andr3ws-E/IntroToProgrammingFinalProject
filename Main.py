@@ -203,13 +203,15 @@ class Button():
         if self.rect.collidepoint(pos):
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 self.clicked = True
+                #moves the button out of the screen when clicked
+                self.rect.x += 500
                 action = True
 
         if pg.mouse.get_pressed()[0] == 0:
-            self.clicked = True
+            self.clicked = False
             
         # Draws the button on the screen
-        surface.blit(self.image, (self.rect.x, self.rect.y))
+        screen.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
 
@@ -220,6 +222,9 @@ exit_img = pg.image.load(os.path.join(img_folder, 'exit_btn.jpeg')).convert_alph
 # Creates button instances
 start_button = Button(30, HEIGHT/2, start_img, 1)
 exit_button = Button(235, HEIGHT/2, exit_img, 1)
+
+def move_exit_button():
+    exit_button = Button(500, HEIGHT/2, exit_img, 1)
 
 # Sound Variable
 Mob_damage = pg.mixer.Sound(os.path.join(sound_folder, 'bad.wav'))
@@ -269,11 +274,19 @@ while running:
         ###### Draw the background #######
         screen.fill(BLACK)
 
+        # if the user preses the button it spawn in the point, and mob sprites
         if start_button.draw(screen):
-            print('game starting')
+            sprite_spawn() 
+            move_exit_button()
+            pg.display.update()
+            print('Game Starting')
+
+        # if the user hits exit it will close the game
         if exit_button.draw(screen):
-            pg.QUIT()
-            print('game ending')
+            print('Game Ending')
+            pg.QUIT() 
+            
+
 
         hits = pg.sprite.spritecollide(player, all_grounds, False)
 
